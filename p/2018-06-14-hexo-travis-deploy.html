@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head -->
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="ladyrick">
+    <meta name="description" itemprop="description" content="之前的博客一直用的是wordpress，因为hexo的话，每次还得手动运行hexo generate，然后把public文件夹复制到腾讯云上。如果是使用github pages的话，也需要每次把public文件夹push上去。就感觉很繁琐，觉得还不如用wordpress，在线写文章。
+后来，越来越觉得在线写文章是个很蛋疼的事情。而且，wordpress使用了数据库来存储文章，就感觉很不优雅。于是开始考虑换回hexo。">
+    <meta name="keywords" content>
+
+    <!-- Page Title -->
+    
+        <title>使用travis自动部署hexo博客到github pages | Hello World</title>
+    
+    <link rel="icon" href="/img/avatar-default.png">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .deactiveColor{
+            color: #37474f;
+        }
+        .activeColor{
+            color: #006064;
+        }
+        a:hover{
+            color: #006064;
+        }
+        .header-btn{
+            color: #37474f;
+        }
+        
+        .post-content img{
+            margin: 50px auto;
+        }
+        
+    </style>
+</head>
+    <body>
+        <div class="container">
+
+            <!-- Top Anchor -->
+            <div id="top"></div>
+
+            <!-- Header -->
+            <header class="header-wrapper">
+    <div class="header-title-wrapper">
+        <!-- Page Title -->
+        <p class="header-title">
+             
+                
+                    使用travis自动部署hexo博客到github pages
+                
+            
+        </p>  
+    </div>    
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+    
+    <div class="header-detail">
+        <!-- Header Button -->
+        <div class="header-btn-wrapper">
+            
+                <span>
+                    <a class="home-btn header-btn" href="/" title="homepage"><i class="fa fa-home"></i></a>
+                </span>
+
+                
+                    <span>
+                        <a class="catalog-btn header-btn"><i class="fa fa-list-ul"></i></a>
+                    </span>
+                
+            
+        </div>
+    </div>
+</header>
+
+            <!-- Main -->
+            <main>
+                <article class="post-wrapper">
+    
+
+    
+        <!-- Article Catalog -->
+        <div class="catalog-dropdown col-xs-12 col-sm-12">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法"><span class="toc-number">2.</span> <span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-在github中添加personal-access-token"><span class="toc-number">2.1.</span> <span class="toc-text">1. 在github中添加personal access token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-在仓库根目录创建travis配置文件"><span class="toc-number">2.2.</span> <span class="toc-text">2. 在仓库根目录创建travis配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-下载安装travis工具，定义环境变量。"><span class="toc-number">2.3.</span> <span class="toc-text">3. 下载安装travis工具，定义环境变量。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-在travis网站上启动持续集成"><span class="toc-number">2.4.</span> <span class="toc-text">4. 在travis网站上启动持续集成</span></a></li></ol></li></ol>
+        </div>
+    
+
+    
+        <!--For now, Lightbox Only Show in Post Layout -->
+        
+
+        
+        
+    
+
+    
+
+    <!-- Article Content -->
+    <div class="post-content">
+        <p>之前的博客一直用的是wordpress，因为hexo的话，每次还得手动运行<code>hexo generate</code>，然后把public文件夹复制到腾讯云上。如果是使用github pages的话，也需要每次把public文件夹push上去。就感觉很繁琐，觉得还不如用wordpress，在线写文章。</p>
+<p>后来，越来越觉得在线写文章是个很蛋疼的事情。而且，wordpress使用了数据库来存储文章，就感觉很不优雅。于是开始考虑换回hexo。</p>
+<a id="more"></a>
+<p>关于hexo部署繁琐的问题，最近接触了持续集成(CI, Continuous integration)，感觉可以用于自动部署，于是研究了一下，成功了。</p>
+<p>目前使用的持续集成工具是<a href="https://travis-ci.org/" target="_blank" rel="noopener">travis</a>，使用github pages托管静态页面。现在的效果是，只要往github上一推送，就可以自动generate并将public文件夹push到gh-pages分支，实现github pages的自动更新。</p>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>持续集成的原理是，每次检测到github上的提交，就运行一些预设的命令。<br>这些命令定义在仓库根目录下的<code>.travis.yml</code>文件中。<br>因此，只要合理配置这些命令，就可以让travis帮你完成generate和deploy的工作。</p>
+<p>另一个需要解决的问题是，要让travis推送到你的github仓库，需要它有读写权限。<br>但是，我们总不能把github的密码写入配置文件中去吧？更不能把ssh密钥写入配置文件中。<br>好在，travis提供了加密功能，可以加密一个字符串，然后把加密的字符串写入配置文件中。这样就只有travis和你自己知道原始字符串的内容了。</p>
+<p>另外，要让travis拥有读写仓库的权限，其实并不需要给它账号密码，或者ssh密钥。只需要给他一个personal access token即可。而且，这样还可以精确地控制travis的权限，而不是给它所有的用户权限。</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="1-在github中添加personal-access-token"><a href="#1-在github中添加personal-access-token" class="headerlink" title="1. 在github中添加personal access token"></a>1. 在github中添加<code>personal access token</code></h2><p>打开<a href="https://github.com/settings/profile" target="_blank" rel="noopener">github的设置页面</a>，点击左侧的<code>Develpoer settings</code>进入开发者设置页面。<br>点击<code>Personal access tokens</code>，接着点击<code>Generate new token</code>。<br><code>Token description</code>一栏可以随便填，以供日后辨认即可。<br>在<code>Select scopes</code>中，勾选第一个选项，也就是<code>repo</code>选项。<br>最后点击<code>Generate token</code>，可以看到生成了一个很长的字符串，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">274e38cdf16e254da99a190ffbd0740b5ac3dcac</span><br></pre></td></tr></table></figure></p>
+<p>记下它，以备后续使用。</p>
+<h2 id="2-在仓库根目录创建travis配置文件"><a href="#2-在仓库根目录创建travis配置文件" class="headerlink" title="2. 在仓库根目录创建travis配置文件"></a>2. 在仓库根目录创建travis配置文件</h2><p>打开仓库文件夹，在根目录下新建<code>.travis.yml</code>文件，其内容如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">node_js</span></span><br><span class="line"></span><br><span class="line"><span class="attr">node_js:</span> <span class="string">stable</span> <span class="comment"># 要安装的node版本为当前的稳定版。</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line"><span class="attr">  directories:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">node_modules</span> <span class="comment"># 要缓存的文件夹</span></span><br><span class="line"></span><br><span class="line"><span class="attr">install:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">npm</span> <span class="string">install</span> <span class="comment"># install阶段执行的命令。</span></span><br><span class="line"></span><br><span class="line"><span class="attr">script:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">npx</span> <span class="string">hexo</span> <span class="string">generate</span> <span class="comment"># script阶段执行的命令</span></span><br><span class="line"></span><br><span class="line"><span class="attr">after_script:</span> <span class="comment"># 最后执行的命令</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">cd</span> <span class="string">public</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">echo</span> <span class="string">blog.ladyrick.com</span> <span class="string">&gt; CNAME # github pages服务，自定义域名</span></span><br><span class="line"><span class="string">- git init</span></span><br><span class="line"><span class="string">- git config user.name "ladyrick" # 配置git参数</span></span><br><span class="line"><span class="string">- git config user.email "ladyrick@qq.com" # 配置git参数</span></span><br><span class="line"><span class="string">- git add .</span></span><br><span class="line"><span class="string">- git commit -m "travis"</span></span><br><span class="line"><span class="string">- git push -f "https://$&#123;MY_TOKEN&#125;@github.com/ladyrick/hexo-blog.git" master:gh-pages</span></span><br><span class="line"><span class="string"># 强制push到gh-pages分支。注意这里使用了环境变量 $&#123;MY_TOKEN&#125;</span></span><br><span class="line"><span class="string"># 另外，注意修改仓库地址。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span><span class="attr">branches:</span></span><br><span class="line"><span class="attr">  only:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">master</span> <span class="comment"># 触发持续集成的分支</span></span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意我们使用了<code>${MY_TOKEN}</code>环境变量。这个环境变量定义了我们前面得到的<code>personal access token</code>。<br>但是，到目前为止，travis还无法识别这个环境变量。</p>
+<h2 id="3-下载安装travis工具，定义环境变量。"><a href="#3-下载安装travis工具，定义环境变量。" class="headerlink" title="3. 下载安装travis工具，定义环境变量。"></a>3. 下载安装travis工具，定义环境变量。</h2><p>首先需要安装ruby环境。<a href="https://www.ruby-lang.org/" target="_blank" rel="noopener">Ruby官网</a><br>安装Ruby后，安装travis：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install travis</span><br></pre></td></tr></table></figure></p>
+<p>接着，切换到仓库目录，执行以下命令(也可以不需要切换到仓库目录，但是需要添加参数<code>-r owner/project</code>)：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt MY_TOKEN=<span class="string">"274e38cdf16e254da99a190ffbd0740b5ac3dcac"</span> --add</span><br></pre></td></tr></table></figure></p>
+<p>这样即可将前面得到的<code>personal access token</code>赋给环境变量<code>MY_TOKEN</code>，生成加密字符串，并自动添加到<code>.travis.yml</code>文件中。<br>更多关于travis加密的内容请看<a href="https://docs.travis-ci.com/user/encryption-keys/" target="_blank" rel="noopener">travis文档</a>。</p>
+<h2 id="4-在travis网站上启动持续集成"><a href="#4-在travis网站上启动持续集成" class="headerlink" title="4. 在travis网站上启动持续集成"></a>4. 在travis网站上启动持续集成</h2><p>最后一个步骤，很简单，打开<a href="https://travis-ci.org/profile" target="_blank" rel="noopener">https://travis-ci.org/profile</a>，用github账号登陆，找到你的仓库，点击按钮即可启动。</p>
+<p>这样，以后每次push变更，都会触发travis的持续集成服务，自动完成构建，并推送到gh-pages分支。</p>
+  
+    </div> 
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+
+    <div class="post-info-wrapper">
+            
+                    <!-- Post Info -->
+                    <p class="post-date">2018-06-14</p>
+                    
+                    
+                        <p class="post-info-categories">
+                            
+                        </p>
+                    
+
+                    
+            
+    </div>
+</article>
+
+
+    
+
+            </main>
+
+            <!-- 'To Top' Btn-->
+            
+                <div id="to-top">
+    <a href="#top" class="toTop">
+        <i class="fa fa-pagelines"></i>
+    </a>
+</div>
+            
+
+            <!-- Footer -->
+            
+                <footer class="footer-wrapper col-xs-12 col-sm-12">
+    <div class="footer-banner-wrapper">
+        <p class="footer-banner">自豪地使用 <strong><a href="https://hexo.io/" title="Hexo">Hexo</a></strong>
+        & <strong><a href="https://github.com/Lonezj/hexo-theme-wind" title="Wind">Wind</a></strong></p>
+    </div>
+</footer>
+            
+        </div>
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/css/atelier-plateau-light.min.css" type="text/css">
+        <script src="//cdn.bootcss.com/prettify/r298/prettify.min.js" type="text/javascript"></script>
+    </body>
+</html>

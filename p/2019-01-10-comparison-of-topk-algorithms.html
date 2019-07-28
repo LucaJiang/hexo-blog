@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head -->
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="ladyrick">
+    <meta name="description" itemprop="description" content="引子给定一个数组，寻找出数组中前k小的元素。
+对于这个经典问题，我之前一直只知道可以用堆来解决。
+构造一个大根堆，然后遍历所有数据，如果数据小于堆顶元素，就替换堆顶元素，调整堆。
+这样最后堆中的元素就是原数组中前k小的元素。
+这个算法的时间复杂度为O(nlogk)。">
+    <meta name="keywords" content>
+
+    <!-- Page Title -->
+    
+        <title>数组前k小元素的各种方法对比 | Hello World</title>
+    
+    <link rel="icon" href="/img/avatar-default.png">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .deactiveColor{
+            color: #37474f;
+        }
+        .activeColor{
+            color: #006064;
+        }
+        a:hover{
+            color: #006064;
+        }
+        .header-btn{
+            color: #37474f;
+        }
+        
+        .post-content img{
+            margin: 50px auto;
+        }
+        
+    </style>
+</head>
+    <body>
+        <div class="container">
+
+            <!-- Top Anchor -->
+            <div id="top"></div>
+
+            <!-- Header -->
+            <header class="header-wrapper">
+    <div class="header-title-wrapper">
+        <!-- Page Title -->
+        <p class="header-title">
+             
+                
+                    数组前k小元素的各种方法对比
+                
+            
+        </p>  
+    </div>    
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+    
+    <div class="header-detail">
+        <!-- Header Button -->
+        <div class="header-btn-wrapper">
+            
+                <span>
+                    <a class="home-btn header-btn" href="/" title="homepage"><i class="fa fa-home"></i></a>
+                </span>
+
+                
+                    <span>
+                        <a class="catalog-btn header-btn"><i class="fa fa-list-ul"></i></a>
+                    </span>
+                
+            
+        </div>
+    </div>
+</header>
+
+            <!-- Main -->
+            <main>
+                <article class="post-wrapper">
+    
+
+    
+        <!-- Article Catalog -->
+        <div class="catalog-dropdown col-xs-12 col-sm-12">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引子"><span class="toc-number">1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法1"><span class="toc-number">2.</span> <span class="toc-text">方法1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法2"><span class="toc-number">3.</span> <span class="toc-text">方法2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法3"><span class="toc-number">4.</span> <span class="toc-text">方法3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法4"><span class="toc-number">5.</span> <span class="toc-text">方法4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法5"><span class="toc-number">6.</span> <span class="toc-text">方法5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#方法6"><span class="toc-number">7.</span> <span class="toc-text">方法6</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结论"><span class="toc-number">8.</span> <span class="toc-text">结论</span></a></li></ol>
+        </div>
+    
+
+    
+        <!--For now, Lightbox Only Show in Post Layout -->
+        
+
+        
+        
+    
+
+    
+
+    <!-- Article Content -->
+    <div class="post-content">
+        <h1 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h1><p><strong>给定一个数组，寻找出数组中前k小的元素。</strong></p>
+<p>对于这个经典问题，我之前一直只知道可以用<strong>堆</strong>来解决。</p>
+<p>构造一个大根堆，然后遍历所有数据，如果数据小于堆顶元素，就替换堆顶元素，调整堆。</p>
+<p>这样最后堆中的元素就是原数组中前k小的元素。</p>
+<p>这个算法的时间复杂度为O(nlogk)。</p>
+<a id="more"></a>
+<p>但是，我发现，C++ stl 中关于堆的函数有，<code>make_heap</code>，<code>push_heap</code>，<code>pop_heap</code>，<code>sort_heap</code>，<code>is_heap</code>。</p>
+<p>这其中，貌似并没有提供“替换堆顶元素，调整堆”的函数。要实现这个效果，可以通过先<code>pop_heap</code>，再<code>push_heap</code>来实现。</p>
+<p>因此，我对这两种方式进行了一个对比：</p>
+<ul>
+<li>方法1：先<code>pop_heap</code>，再<code>push_heap</code>来替换堆顶元素。</li>
+<li>方法2：自己实现调整堆顶元素的功能。</li>
+</ul>
+<h1 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h1><p>使用<code>pop_heap</code>和<code>push_heap</code>来两步调整堆顶。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">size_t</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"std::pop_heap and std::push_heap"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; heap;</span><br><span class="line">    heap.reserve(k);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i : data) &#123;</span><br><span class="line">        <span class="keyword">if</span> (heap.size() &lt; k) &#123;</span><br><span class="line">            heap.push_back(i);</span><br><span class="line">            push_heap(heap.begin(), heap.end());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; heap.front()) &#123;</span><br><span class="line">                pop_heap(heap.begin(), heap.end());</span><br><span class="line">                heap.back() = i;</span><br><span class="line">                push_heap(heap.begin(), heap.end());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> heap.front();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h1><p>自己实现调整堆顶。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">size_t</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"replace heap top and adjust heap"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; heap;</span><br><span class="line">    heap.reserve(k);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i : data) &#123;</span><br><span class="line">        <span class="keyword">if</span> (heap.size() &lt; k) &#123;</span><br><span class="line">            heap.push_back(i);</span><br><span class="line">            push_heap(heap.begin(), heap.end());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt; heap.front()) &#123;</span><br><span class="line">                heap.front() = i;</span><br><span class="line">                <span class="keyword">bool</span> adjust = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">int</span> st = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (adjust) &#123;</span><br><span class="line">                    <span class="keyword">int</span> largest = st;</span><br><span class="line">                    <span class="keyword">int</span> left = (st &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">int</span> right = (st &lt;&lt; <span class="number">1</span>) + <span class="number">2</span>;</span><br><span class="line">                    <span class="keyword">int</span> size = heap.size();</span><br><span class="line">                    <span class="keyword">if</span> (left &lt; size &amp;&amp; heap[left] &gt; heap[largest])</span><br><span class="line">                        largest = left;</span><br><span class="line">                    <span class="keyword">if</span> (right &lt; size &amp;&amp; heap[right] &gt; heap[largest])</span><br><span class="line">                        largest = right;</span><br><span class="line">                    <span class="keyword">if</span> (largest != st) &#123;</span><br><span class="line">                        <span class="built_in">std</span>::swap(heap[st], heap[largest]);</span><br><span class="line">                        st = largest;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        adjust = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> heap.front();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法1 和方法2 的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">std::pop_heap and std::push_heap</span><br><span class="line">result = 31415926 CORRECT</span><br><span class="line">copy data time used = 15ms</span><br><span class="line">pure compute time used = 233ms</span><br><span class="line"></span><br><span class="line">replace heap top and adjust heap</span><br><span class="line">result = 31415926 CORRECT</span><br><span class="line">copy data time used = 15ms</span><br><span class="line">pure compute time used = 246ms</span><br></pre></td></tr></table></figure>
+<p>果然，还是我写的调整堆顶太丑了，连stl的两步调整的效率都比不上。</p>
+<p>理论上，一步调整堆顶的效率肯定会比两步调整要高吧。</p>
+<p>所以结论是，下次遇到堆调整的问题，直接上<code>pop_heap</code>和<code>push_heap</code>。</p>
+<hr>
+<p>回到最初的问题。</p>
+<p>对于寻找数组前k小元素的问题，在知乎上讨论之后，发现其实还有比建堆更高效的方法。</p>
+<p>那就是不断使用partition算法。</p>
+<p>partition算法是这样的，随机取出一个元素（比如就取最后的元素）作为枢轴（pivot），然后调整数组，把数组分为两部分，左边的都是不大于枢轴的，右边的都是不小于枢轴的。</p>
+<p>通过使用一次partition算法，我们可以将数组分割。但是此时的分割不一定是符合要求的分割（枢轴不是第k个元素）。因此，我们需要不断分割，直到枢轴落到第k个元素。此时就找到了前k小的元素。</p>
+<p>这个算法的时间复杂度为O(n)。</p>
+<h1 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h1><p>使用stl的<code>std::nth_element</code>函数。</p>
+<p>这个函数内部就是采用不断partition的方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">size_t</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"std::nth_element"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    nth_element(data.begin(), data.begin() + k - <span class="number">1</span>, data.end());</span><br><span class="line">    display(data);</span><br><span class="line">    <span class="keyword">return</span> data[k - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::nth_element</span><br><span class="line">result = 31415926 CORRECT</span><br><span class="line">copy data time used = 14ms</span><br><span class="line">pure compute time used = 86ms</span><br></pre></td></tr></table></figure>
+<p>可以看到运行速度一下快了一大截。</p>
+<h1 id="方法4"><a href="#方法4" class="headerlink" title="方法4"></a>方法4</h1><p>自己手痒实现的类似<code>std::nth_element</code>的算法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">size_t</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"my partition function"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = data.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> l = left, r = right;</span><br><span class="line">        <span class="keyword">int</span> pivot = data[r];</span><br><span class="line">        <span class="keyword">while</span> (l &lt; r) &#123;</span><br><span class="line">            <span class="keyword">while</span> (l &lt; r &amp;&amp; data[l] &lt;= pivot)</span><br><span class="line">                ++l;</span><br><span class="line">            data[r] = data[l];</span><br><span class="line">            <span class="keyword">while</span> (l &lt; r &amp;&amp; data[r] &gt;= pivot)</span><br><span class="line">                --r;</span><br><span class="line">            data[l] = data[r];</span><br><span class="line">        &#125;</span><br><span class="line">        data[l] = pivot;</span><br><span class="line">        <span class="keyword">if</span> (l &lt; k - <span class="number">1</span>) &#123;</span><br><span class="line">            left = l + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (l &gt; k - <span class="number">1</span>) &#123;</span><br><span class="line">            right = l - <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> data[l];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my partition function</span><br><span class="line">result = 31415926 CORRECT</span><br><span class="line">copy data time used = 14ms</span><br><span class="line">pure compute time used = 84ms</span><br></pre></td></tr></table></figure>
+<p>自己写的算法效率跟stl差不多。</p>
+<h1 id="方法5"><a href="#方法5" class="headerlink" title="方法5"></a>方法5</h1><p>知乎上还有人说用<code>std::partial_sort</code>函数。</p>
+<p>这个函数是部分排序函数，内部使用的是堆排序。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">size_t</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"std::partial_sort"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    partial_sort(data.begin(), data.begin() + k, data.end());</span><br><span class="line">    display(data);</span><br><span class="line">    <span class="keyword">return</span> data[k - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::partial_sort</span><br><span class="line">result = 31415926 CORRECT</span><br><span class="line">copy data time used = 13ms</span><br><span class="line">pure compute time used = 830ms</span><br></pre></td></tr></table></figure>
+<p>太慢了吧。</p>
+<h1 id="方法6"><a href="#方法6" class="headerlink" title="方法6"></a>方法6</h1><p>stl实现了一个优先队列，其实内部也是堆。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;data, <span class="keyword">size_t</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"std::priority_queue"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, less&lt;<span class="keyword">int</span>&gt;&gt; prique;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i : data) &#123;</span><br><span class="line">        <span class="keyword">if</span> (prique.size() &lt; k) &#123;</span><br><span class="line">            prique.push(i);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (prique.top() &gt; i) &#123;</span><br><span class="line">            prique.pop();</span><br><span class="line">            prique.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> prique.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::priority_queue</span><br><span class="line">result = 31415926 CORRECT</span><br><span class="line">copy data time used = 14ms</span><br><span class="line">pure compute time used = 268ms</span><br></pre></td></tr></table></figure>
+<p>可以看到跟维护堆的方法效率差不多。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>对于“数组中前k小元素”的问题，有两种算法。</p>
+<ol>
+<li>维护堆数据结构。（O(nlogk)）</li>
+<li>不断使用partition算法。（O(n)）</li>
+</ol>
+<p><strong>方法1</strong>的优点在于，可以不需要一次处理所有数据，也就是说可以处理流数据。</p>
+<p>而且，其实不需要纠结<code>pop_heap</code>+<code>push_heap</code>，跟直接手动替换堆顶元素再调整堆，哪个更快。</p>
+<p>除非stl官方实现了后者，我们还是用前者比较方便。或者用优先队列更省心。</p>
+<p>如果用<strong>方法2</strong>，虽然时间复杂度比较低，但是其实波动很大。</p>
+<p>在我的测试中，有时候可以比方法1高效10倍，有时候跟方法1差不多。</p>
+<p>而且这种方法必须一次性处理所有数据，必须纵观全局。</p>
+<p>至于<code>partial_sort</code>，拜拜了吧您。</p>
+  
+    </div> 
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+
+    <div class="post-info-wrapper">
+            
+                    <!-- Post Info -->
+                    <p class="post-date">2019-01-10</p>
+                    
+                    
+                        <p class="post-info-categories">
+                            
+                        </p>
+                    
+
+                    
+            
+    </div>
+</article>
+
+
+    
+
+            </main>
+
+            <!-- 'To Top' Btn-->
+            
+                <div id="to-top">
+    <a href="#top" class="toTop">
+        <i class="fa fa-pagelines"></i>
+    </a>
+</div>
+            
+
+            <!-- Footer -->
+            
+                <footer class="footer-wrapper col-xs-12 col-sm-12">
+    <div class="footer-banner-wrapper">
+        <p class="footer-banner">自豪地使用 <strong><a href="https://hexo.io/" title="Hexo">Hexo</a></strong>
+        & <strong><a href="https://github.com/Lonezj/hexo-theme-wind" title="Wind">Wind</a></strong></p>
+    </div>
+</footer>
+            
+        </div>
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/css/atelier-plateau-light.min.css" type="text/css">
+        <script src="//cdn.bootcss.com/prettify/r298/prettify.min.js" type="text/javascript"></script>
+    </body>
+</html>

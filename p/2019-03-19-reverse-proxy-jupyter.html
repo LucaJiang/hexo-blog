@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head -->
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="ladyrick">
+    <meta name="description" itemprop="description" content="需求为了更方便地学习python，就寻思着在腾讯云服务器上部署一个jupyter服务。但是，如果只是起一个jupyter notebook在后台运行，那我就必须访问ladyrick.com:8888来访问（假设端口为8888）。这是非常丑陋的。我希望可以通过访问jupyter.ladyrick.com来访问我的jupyter服务。
+另外，为了防止别人访问，只为我一个人服务，需要给jupyter服务设置密码。">
+    <meta name="keywords" content>
+
+    <!-- Page Title -->
+    
+        <title>在服务器上部署jupyter供自己使用 | Hello World</title>
+    
+    <link rel="icon" href="/img/avatar-default.png">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .deactiveColor{
+            color: #37474f;
+        }
+        .activeColor{
+            color: #006064;
+        }
+        a:hover{
+            color: #006064;
+        }
+        .header-btn{
+            color: #37474f;
+        }
+        
+        .post-content img{
+            margin: 50px auto;
+        }
+        
+    </style>
+</head>
+    <body>
+        <div class="container">
+
+            <!-- Top Anchor -->
+            <div id="top"></div>
+
+            <!-- Header -->
+            <header class="header-wrapper">
+    <div class="header-title-wrapper">
+        <!-- Page Title -->
+        <p class="header-title">
+             
+                
+                    在服务器上部署jupyter供自己使用
+                
+            
+        </p>  
+    </div>    
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+    
+    <div class="header-detail">
+        <!-- Header Button -->
+        <div class="header-btn-wrapper">
+            
+                <span>
+                    <a class="home-btn header-btn" href="/" title="homepage"><i class="fa fa-home"></i></a>
+                </span>
+
+                
+                    <span>
+                        <a class="catalog-btn header-btn"><i class="fa fa-list-ul"></i></a>
+                    </span>
+                
+            
+        </div>
+    </div>
+</header>
+
+            <!-- Main -->
+            <main>
+                <article class="post-wrapper">
+    
+
+    
+        <!-- Article Catalog -->
+        <div class="catalog-dropdown col-xs-12 col-sm-12">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方案"><span class="toc-number">2.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-为jupyter设置密码"><span class="toc-number">2.1.</span> <span class="toc-text">1. 为jupyter设置密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-设置apache反向代理"><span class="toc-number">2.2.</span> <span class="toc-text">2. 设置apache反向代理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+        </div>
+    
+
+    
+        <!--For now, Lightbox Only Show in Post Layout -->
+        
+
+        
+        
+            <!-- Article Img Lightbox -->
+            <div class="gallery">
+    
+    
+    <div class="lightbox">
+        <!-- Close Button -->
+        <span class="close-gallery">&times;</span>
+        
+        <!-- Photo -->
+        <img class="gallery-photo">
+    </div>
+</div>
+        
+    
+
+    
+
+    <!-- Article Content -->
+    <div class="post-content">
+        <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>为了更方便地学习python，就寻思着在腾讯云服务器上部署一个jupyter服务。<br>但是，如果只是起一个<code>jupyter notebook</code>在后台运行，那我就必须访问<code>ladyrick.com:8888</code>来访问（假设端口为8888）。<br>这是非常丑陋的。<br>我希望可以通过访问<code>jupyter.ladyrick.com</code>来访问我的jupyter服务。</p>
+<p>另外，为了防止别人访问，只为我一个人服务，需要给jupyter服务设置密码。</p>
+<a id="more"></a>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="1-为jupyter设置密码"><a href="#1-为jupyter设置密码" class="headerlink" title="1. 为jupyter设置密码"></a>1. 为jupyter设置密码</h2><p>这个非常简单了。直接运行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook password</span><br></pre></td></tr></table></figure></p>
+<p>然后根据提示，输入密码即可。</p>
+<p>这会在<code>~/.jupyter/jupyter_notebook_config.json</code>文件中写入密码的哈希值，这样以后在新浏览器登陆时，就需要输入密码。</p>
+<p><img src="./2019-03-19-reverse-proxy-jupyter/jupyter_passwork.png" alt></p>
+
+<h2 id="2-设置apache反向代理"><a href="#2-设置apache反向代理" class="headerlink" title="2. 设置apache反向代理"></a>2. 设置apache反向代理</h2><p>首先我们先配置一下jupyter。</p>
+<p>生成jupyter的配置文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure></p>
+<p>这会将默认配置写入<code>~/.jupyter/jupyter_notebook_config.py</code>文件。</p>
+<p>打开配置文件，修改配置项如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c.NotebookApp.port = <span class="number">8888</span> <span class="comment"># 自定义端口号。</span></span><br><span class="line">c.NotebookApp.open_browser = <span class="literal">False</span> <span class="comment"># 不打开浏览器。因为这是在命令行服务器上，自然没有浏览器。</span></span><br><span class="line">c.NotebookApp.ip = <span class="string">"localhost"</span> <span class="comment"># 配置IP地址。localhost表明jupyter服务只能在本机访问。</span></span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">"/home/username/jupyter"</span> <span class="comment"># jupyter的起始文件夹。不配置的话就是home文件夹。最好用绝对路径。</span></span><br></pre></td></tr></table></figure></p>
+<p>启用apache的一些mod。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod proxy proxy_http proxy_wstunnel</span><br></pre></td></tr></table></figure></p>
+<p>配置apache。<br>在<code>/etc/apache2/sites-available</code>下新建配置文件<code>jupyter.conf</code>。<br>配置文件内容如下：<br><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&lt;VirtualHost *:80&gt;</span></span><br><span class="line"><span class="attribute"><span class="nomarkup">ServerName</span></span> jupyter.ladyrick.com</span><br><span class="line"><span class="attribute">ProxyRequests</span> <span class="literal">off</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;Location /&gt;</span></span><br><span class="line"><span class="attribute">ProxyPass</span>        http://localhost:8888/</span><br><span class="line"><span class="attribute">ProxyPassReverse</span> http://localhost:8888/</span><br><span class="line"><span class="attribute">ProxyPassReverseCookieDomain</span> localhost jupyter.ladyrick.com</span><br><span class="line"><span class="attribute">RequestHeader</span> set Origin <span class="string">"http://localhost:8888"</span></span><br><span class="line"><span class="section">&lt;/Location&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;Location /api/kernels/&gt;</span></span><br><span class="line"><span class="attribute">ProxyPass</span>        ws://localhost:8888/api/kernels/</span><br><span class="line"><span class="attribute">ProxyPassReverse</span> ws://localhost:8888/api/kernels/</span><br><span class="line"><span class="section">&lt;/Location&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;Location /terminals/websocket/&gt;</span></span><br><span class="line"><span class="attribute">ProxyPass</span>        ws://localhost:8888/terminals/websocket/</span><br><span class="line"><span class="attribute">ProxyPassReverse</span> ws://localhost:8888/terminals/websocket/</span><br><span class="line"><span class="section">&lt;/Location&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="section">&lt;/VirtualHost&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>保存关闭，并启用该配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite jupyter.conf</span><br></pre></td></tr></table></figure></p>
+<p>最后重启apache即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>密码配置简单，反向代理也很好配置，主要是一开始配置的反向代理，所有<code>ws://</code>协议的请求都失败了。<br>因此需要对websocket请求处理一下，不能直接使用顶层的配置，不然会转成http请求。<br>这个问题还困扰了挺久的。</p>
+  
+    </div> 
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+
+    <div class="post-info-wrapper">
+            
+                    <!-- Post Info -->
+                    <p class="post-date">2019-03-19</p>
+                    
+                    
+                        <p class="post-info-categories">
+                            
+                        </p>
+                    
+
+                    
+            
+    </div>
+</article>
+
+
+    
+
+            </main>
+
+            <!-- 'To Top' Btn-->
+            
+                <div id="to-top">
+    <a href="#top" class="toTop">
+        <i class="fa fa-pagelines"></i>
+    </a>
+</div>
+            
+
+            <!-- Footer -->
+            
+                <footer class="footer-wrapper col-xs-12 col-sm-12">
+    <div class="footer-banner-wrapper">
+        <p class="footer-banner">自豪地使用 <strong><a href="https://hexo.io/" title="Hexo">Hexo</a></strong>
+        & <strong><a href="https://github.com/Lonezj/hexo-theme-wind" title="Wind">Wind</a></strong></p>
+    </div>
+</footer>
+            
+        </div>
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/css/atelier-plateau-light.min.css" type="text/css">
+        <script src="//cdn.bootcss.com/prettify/r298/prettify.min.js" type="text/javascript"></script>
+    </body>
+</html>

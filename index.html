@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head -->
+    <head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="ladyrick">
+    <meta name="description" itemprop="description" content="Keep Coding">
+    <meta name="keywords" content>
+
+    <!-- Page Title -->
+    
+        <title>Home | Hello World</title>
+    
+    <link rel="icon" href="/img/avatar-default.png">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="/js/script.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .deactiveColor{
+            color: #37474f;
+        }
+        .activeColor{
+            color: #006064;
+        }
+        a:hover{
+            color: #006064;
+        }
+        .header-btn{
+            color: #37474f;
+        }
+        
+        .post-content img{
+            margin: 50px auto;
+        }
+        
+    </style>
+</head>
+    <body>
+        <div class="container">
+
+            <!-- Top Anchor -->
+            <div id="top"></div>
+
+            <!-- Header -->
+            <header class="header-wrapper">
+    <div class="header-title-wrapper">
+        <!-- Page Title -->
+        <p class="header-title">
+              
+                Hello World
+            
+        </p>  
+    </div>    
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+    
+    <div class="header-detail">
+        <!-- Header Button -->
+        <div class="header-btn-wrapper">
+            
+                <span>
+                    <a class="home-btn header-btn" href="/" title="homepage"><i class="fa fa-home"></i></a>
+                </span>
+
+                
+                    <span>
+                        <a class="header-btn" href="/archives" title="archives"><i class="fa fa fa-file-text-o"></i></a>
+                    </span>
+                
+            
+        </div>
+    </div>
+</header>
+
+            <!-- Main -->
+            <main>
+                <!-- Post List -->
+<div class="index-wrapper">
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2019-07-28-c++-float-in-memory.html">C++ float数据在内存中的表示形式</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    介绍参考：https://blog.csdn.net/hemingliang1987/article/details/11630409简单地说，一个float型实数在内存中占4个字节，即32个二进制bit，从低位到高位依次叫第0位到第31位。这32位可以分为3个部分：符号位（第31位），阶码（第30位到第23位共8位），尾数（最低23位）。 
+
+符号位。最高位也就是第31位表示这个实数是正数还是负数，为0表示正数或0，为1表示负数。
+阶码。第30位到第23位这8个二进制位表示该实数转化为规格化的二进制实数后的指数与127(127即所谓偏移量)之和即所谓阶码。规格化的二进制实数的指数只能在-127~+127之间，所以，一个float型数的最大值在+2^127即+3.4*10^38，最小值在-2^127即-3.4*10^38。 
+尾数。其他最低的23位即第22位到第0位表示该实数转化为规格化的二进制实数后小数点以后的其余各位即所谓尾数。
+
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2019-07-28</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2019-03-19-reverse-proxy-jupyter.html">在服务器上部署jupyter供自己使用</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    需求为了更方便地学习python，就寻思着在腾讯云服务器上部署一个jupyter服务。但是，如果只是起一个jupyter notebook在后台运行，那我就必须访问ladyrick.com:8888来访问（假设端口为8888）。这是非常丑陋的。我希望可以通过访问jupyter.ladyrick.com来访问我的jupyter服务。
+另外，为了防止别人访问，只为我一个人服务，需要给jupyter服务设置密码。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2019-03-19</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2019-01-10-comparison-of-topk-algorithms.html">数组前k小元素的各种方法对比</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    引子给定一个数组，寻找出数组中前k小的元素。
+对于这个经典问题，我之前一直只知道可以用堆来解决。
+构造一个大根堆，然后遍历所有数据，如果数据小于堆顶元素，就替换堆顶元素，调整堆。
+这样最后堆中的元素就是原数组中前k小的元素。
+这个算法的时间复杂度为O(nlogk)。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2019-01-10</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2018-06-24-C++-puzzle.html">C++ Puzzle</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    本文搜集了一些有趣的C++的题目，有些题目令人大跌眼镜。来看看！
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2018-06-24</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2018-06-14-hexo-travis-deploy.html">使用travis自动部署hexo博客到github pages</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    之前的博客一直用的是wordpress，因为hexo的话，每次还得手动运行hexo generate，然后把public文件夹复制到腾讯云上。如果是使用github pages的话，也需要每次把public文件夹push上去。就感觉很繁琐，觉得还不如用wordpress，在线写文章。
+后来，越来越觉得在线写文章是个很蛋疼的事情。而且，wordpress使用了数据库来存储文章，就感觉很不优雅。于是开始考虑换回hexo。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2018-06-14</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2018-06-05-hello-world.html">Hello World</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2018-06-06</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2018-05-16-tsinghua-isatap-ipv6.html">清华大学校内设置isatap隧道使用ipv6方法</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    本文介绍了在清华大学校内使用ipv6的方法，包括windows系统和ubuntu系统。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2018-05-16</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2017-11-09-C++-explicit.html">C++：explicit关键字</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    explicit关键字作用于类的构造函数。一旦类的构造函数声明了explicit关键字，构造函数就必须使用显示的方式调用。这样做可以防止构造函数被不知不觉地，莫名其妙地调用。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2017-11-09</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2017-09-17-windows-custom-folder-name.html">Windows如何自定文件夹名称</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    比如，桌面文件夹，其实真实的路径是1C:\Users\用户名\Desktop
+而不是桌面。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2017-09-17</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+    <div class="index-post-wrapper">
+
+        <!-- Post Title -->
+        
+            <a class="index-post-title" href="/p/2016-12-12-rohm-network-problem.html">罗姆楼网络问题解决方案</a>
+        
+
+        <!-- Post Info -->
+        <div class="index-post-info">
+            
+                <!-- Division Line -->
+                <div class="division"></div> 
+            
+
+            <div class="post-preview">
+                
+                    罗姆楼的网络问题真的是困扰了我很久。从进入实验室开始，就不停断网……一开始怀疑是网卡的问题，还自费买了个网卡，结果证明不是网卡的问题。最神奇的是，使用win7好好的，一用win10，不到三分钟铁定断网。这导致整个实验室都是用win7的……真心醉了。
+                
+            </div>
+
+            <div class="index-post-meta">
+                    <span class="index-post-time">2016-12-12</span>
+                    <span class="index-post-categories">
+                        
+                    </span>
+                </div>
+        </div>
+    </div>
+    
+
+    <div class="pagination-wrapper">
+    <ul class="pagination-btn">
+        
+        
+    </ul>
+</div>
+</div>
+            </main>
+
+            <!-- 'To Top' Btn-->
+            
+                <div id="to-top">
+    <a href="#top" class="toTop">
+        <i class="fa fa-pagelines"></i>
+    </a>
+</div>
+            
+
+            <!-- Footer -->
+            
+                <footer class="footer-wrapper col-xs-12 col-sm-12">
+    <div class="footer-banner-wrapper">
+        <p class="footer-banner">自豪地使用 <strong><a href="https://hexo.io/" title="Hexo">Hexo</a></strong>
+        & <strong><a href="https://github.com/Lonezj/hexo-theme-wind" title="Wind">Wind</a></strong></p>
+    </div>
+</footer>
+            
+        </div>
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/css/atelier-plateau-light.min.css" type="text/css">
+        <script src="//cdn.bootcss.com/prettify/r298/prettify.min.js" type="text/javascript"></script>
+    </body>
+</html>
